@@ -3,7 +3,10 @@ package com.demo.gten.remitcontroller;
 import com.demo.commons.WebAPISecretary;
 import com.demo.param.Heads;
 import com.demo.param.Methods;
+import lombok.Getter;
+import lombok.Setter;
 import org.json.JSONObject;
+import org.json.XML;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -13,6 +16,8 @@ import java.util.Optional;
     @description 匯款入戶查詢
     @date 2024-11-11 上午 01:24
 */
+@Setter
+@Getter
 public class QueryRemit extends WebAPISecretary {
     String postParam;
     QueryRemit() {
@@ -26,7 +31,7 @@ public class QueryRemit extends WebAPISecretary {
         try {
             Optional<String> jsonObj = Optional.ofNullable(obj.spnedRequest(Methods.POST.getMethod(), Heads.JSON.getMethod()));
             if (jsonObj.isPresent()) {
-                return new JSONObject(jsonObj.get());
+                return XML.toJSONObject(jsonObj.get());
             }
         } catch (IOException e) {
             e.printStackTrace();

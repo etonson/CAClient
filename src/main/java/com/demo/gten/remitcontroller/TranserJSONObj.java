@@ -5,7 +5,7 @@ import org.json.JSONObject;
 
 /*
     @author : Eton.lin
-    @description 建立傳遞用餐數值
+    @description 建立傳遞用參數值
     @date 2024-11-10 下午 11:37
 */
 @Data
@@ -28,6 +28,10 @@ public class TranserJSONObj {
         this.date_kind = date_kind;
         this.date_start = date_start;
         this.date_end = date_end;
+    }
+
+    public TranserJSONObj() {
+
     }
 
     public JSONObject createRemitObject() {

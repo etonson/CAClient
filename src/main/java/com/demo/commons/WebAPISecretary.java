@@ -16,7 +16,7 @@ import org.apache.commons.text.StringEscapeUtils;
 @Setter
 public class WebAPISecretary {
     private String wsdlURL = "";
-    private String body ;
+    private String body;
 
     public String spnedRequest(String method, String head) throws IOException {
         // 初始化位置
@@ -32,8 +32,9 @@ public class WebAPISecretary {
         connection.setDoOutput(true);
 
         // 組合發送參數
-        OutputStream os = connection.getOutputStream();
+        OutputStream os = null;
         if (body != null) {
+            os = connection.getOutputStream();
             os.write(body.getBytes());
         }
         // 取得回應資料
@@ -42,7 +43,6 @@ public class WebAPISecretary {
         // 取得回傳資訊stream
         StringBuilder sb;
         String result = null;
-
         if (200 == responseCode) {
             InputStream is = connection.getInputStream();
             InputStreamReader isr = new InputStreamReader(is);
@@ -54,13 +54,13 @@ public class WebAPISecretary {
                 sb.append(temp);
             }
             result = StringEscapeUtils.unescapeXml(sb.toString());
-            System.out.println("response result->");
-            System.out.println(result);
             is.close();
             isr.close();
             br.close();
         }
-        os.close();
+        if (os != null) {
+            os.close();
+        }
         return result;
     }
 }

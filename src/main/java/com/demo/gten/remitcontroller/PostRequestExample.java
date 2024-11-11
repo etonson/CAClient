@@ -1,14 +1,6 @@
 package com.demo.gten.remitcontroller;
-import org.apache.commons.text.StringEscapeUtils;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-
+import org.json.JSONObject;
 /*
     @author : Eton.lin
     @description TODO
@@ -17,38 +9,196 @@ import java.nio.charset.StandardCharsets;
 public class PostRequestExample {
     public static void main(String[] args) {
         try {
-            URL url = new URL("http://127.0.0.1:8080/GTEN/web/remit/queryToken");
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
-            connection.setDoOutput(true);
-            connection.setDoInput(true);
-            connection.setUseCaches(false);
-            connection.setRequestProperty("Content-Type", "application/json");
-            connection.setRequestProperty("Accept", "application/json");
-            int responseCode = connection.getResponseCode();
-            // 取得回傳資訊stream
-            StringBuilder sb ;
-            String result = null ;
-            if (200 == responseCode) {
-                InputStream is = connection.getInputStream();
-                InputStreamReader isr = new InputStreamReader(is);
-                BufferedReader br = new BufferedReader(isr);
-
-                sb = new StringBuilder();
-                String temp ;
-                while (null != (temp = br.readLine())) {
-                    sb.append(temp);
-                }
-                result =  StringEscapeUtils.unescapeXml(sb.toString());
-                System.out.println("response result->");
-                System.out.println(result);
-                is.close();
-                isr.close();
-                br.close();
+            GetToken tokenObj = new GetToken();
+            JSONObject tokenJSON = tokenObj.getToken();
+            JSONObject tokenContent = tokenJSON.getJSONObject("JSONObject");
+            int status = 99;
+            if (tokenJSON.has("JSONObject")) {
+                status = tokenContent.getInt("status");
             }
-
+            int num = 0;
+            if (status == 0) {
+                for (String dept_code : deptCodes) {
+                    for (String date_kind : new String[]{"1"}) {
+                        int page = (num++);
+                        if (page >= 0 && page < 30) {
+                            QueryRemit queryRemit = new QueryRemit();
+                            TranserJSONObj transerJSONObj = new TranserJSONObj(
+                                    "C",
+                                    "67000000",
+                                    dept_code,
+                                    "7+1=89Bb@123456",
+                                    tokenContent.getString("token"),
+                                    date_kind,
+                                    "1131001",
+                                    "1131010");
+                            queryRemit.setPostParam(transerJSONObj.createRemitString());
+                            System.out.println("start");
+                            System.out.println("第" + page + "筆資料");
+                            System.out.println("傳遞參數request:" + transerJSONObj.createRemitString());
+                            JSONObject result = queryRemit.postQueryRemit();
+                            System.out.println(result.toString());
+                        }
+                    }
+                }
+                System.out.println("查詢結束!!");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+    static String[] deptCodes = {
+            "2192000000000",
+            "0303000000000",
+            "0200200000000",
+            "0200200210000",
+            "0200200220000",
+            "0200400000000",
+            "0303100000000",
+            "0303200330000",
+            "0303200340000",
+            "0303200350000",
+            "0303200360000",
+            "0303200370000",
+            "0303200380000",
+            "0303200390000",
+            "0303200400000",
+            "0303200410000",
+            "0303200420000",
+            "0303200430000",
+            "0303200440000",
+            "0303200450000",
+            "0303200460000",
+            "0303200470000",
+            "0303200480000",
+            "0303200490000",
+            "0303200500000",
+            "0303200510000",
+            "0303200520000",
+            "0303200530000",
+            "0303200540000",
+            "0303200550000",
+            "0303200560000",
+            "0303200570000",
+            "0303200580000",
+            "0303200590000",
+            "0303200600000",
+            "0303200610000",
+            "0303200620000",
+            "0303200630000",
+            "0303200640000",
+            "0303200650000",
+            "0303200660000",
+            "0303200670000",
+            "0303200680000",
+            "0303200690000",
+            "0307000000000",
+            "0307100000000",
+            "0307200000000",
+            "0307300000000",
+            "0307400000000",
+            "0307500000000",
+            "0307600000000",
+            "0307700000000",
+            "0307800000000",
+            "0307900000000",
+            "0308000000000",
+            "0308100000000",
+            "0308200000000",
+            "0308300000000",
+            "0308400000000",
+            "0308500000000",
+            "0308600000000",
+            "0308700000000",
+            "0308800000000",
+            "0308900000000",
+            "0309000000000",
+            "0309100000000",
+            "0309200000000",
+            "0309300000000",
+            "0309400000000",
+            "0309500000000",
+            "0309600000000",
+            "0309700000000",
+            "0309800000000",
+            "0309900000000",
+            "0310000000000",
+            "0310100000000",
+            "0310200000000",
+            "0310300000000",
+            "0310400000000",
+            "0310500000000",
+            "0310600000000",
+            "0413000000000",
+            "0413001310000",
+            "0515000000000",
+            "0618000000000",
+            "0720000000000",
+            "0720100000000",
+            "0720200000000",
+            "0855000000000",
+            "0855005510000",
+            "0855005520000",
+            "0855005530000",
+            "0855005540000",
+            "0855005550000",
+            "0855005560000",
+            "0960000000000",
+            "0960006010000",
+            "0960006020000",
+            "0960006030000",
+            "1061000000000",
+            "1162000000000",
+            "1162006210000",
+            "1162006220000",
+            "1263000000000",
+            "1263006310000",
+            "1263006320000",
+            "1263006330000",
+            "1263006340000",
+            "1263006350000",
+            "1364000000000",
+            "1465000000000",
+            "1465100000000",
+            "1570000000000",
+            "1570007010000",
+            "1570007020000",
+            "1570007030000",
+            "1570007040000",
+            "1675000000000",
+            "1675007510000",
+            "1675007520000",
+            "1675007530000",
+            "1776000000000",
+            "1776007610000",
+            "1776007640000",
+            "1881000000000",
+            "1881100000000",
+            "1982000000000",
+            "2087000000000",
+            "2087008710000",
+            "2087008720000",
+            "2087008730000",
+            "2087008740000",
+            "2087008750000",
+            "2087008760000",
+            "2087008770000",
+            "2087008780000",
+            "2087008790000",
+            "2087008800000",
+            "2087008810000",
+            "2087008820000",
+            "2087008830000",
+            "2087008840000",
+            "2087008850000",
+            "2087008860000",
+            "2087008870000",
+            "2087008880000",
+            "2087008890000",
+            "2087008900000",
+            "2087008910000",
+            "2087008920000",
+            "2293000000000",
+    };
 }

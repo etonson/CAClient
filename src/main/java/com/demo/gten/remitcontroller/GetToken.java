@@ -4,13 +4,14 @@ import com.demo.param.Heads;
 import com.demo.param.Methods;
 import com.demo.commons.WebAPISecretary;
 import org.json.JSONObject;
+import org.json.XML;
 
 import java.io.IOException;
 import java.util.Optional;
 
 /*
     @author : Eton.lin
-    @description TODO
+    @description 匯款入戶查詢-取得token值
     @date 2024-11-07 上午 11:54
 */
 public class GetToken extends WebAPISecretary {
@@ -24,7 +25,7 @@ public class GetToken extends WebAPISecretary {
         try {
             Optional<String> jsonObj = Optional.ofNullable(obj.spnedRequest(Methods.GET.getMethod(), Heads.JSON.getMethod()));
             if (jsonObj.isPresent()) {
-                return new JSONObject(jsonObj.get());
+                return XML.toJSONObject(jsonObj.get());
             }
         } catch (IOException e) {
             e.printStackTrace();
