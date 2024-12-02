@@ -23,7 +23,7 @@ public class GetToken extends WebAPISecretary {
         obj.setBody(getXML("113", "002002", "B1", "10017000"));
         try {
             obj.spnedRequest(Methods.POST.getMethod(), Heads.XML.getMethod());
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

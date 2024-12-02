@@ -1,8 +1,8 @@
-package com.demo.gten.remitcontroller;
+package com.demo.gtdmcash.cashapiservice;
 
+import com.demo.commons.WebAPISecretary;
 import com.demo.param.Heads;
 import com.demo.param.Methods;
-import com.demo.commons.WebAPISecretary;
 import org.json.JSONObject;
 import org.json.XML;
 
@@ -11,25 +11,24 @@ import java.util.Optional;
 
 /*
     @author : Eton.lin
-    @description 匯款入戶查詢-取得token值
-    @date 2024-11-07 上午 11:54
+    @description 傳票匯入相關api
+    @date 2024-11-13 上午 11:54
 */
-public class GetToken extends WebAPISecretary {
+public class GetToken  extends WebAPISecretary {
     GetToken() {
         super();
-        super.setWsdlURL("http://127.0.0.1:8080/GTEN/web/remit/queryToken");
+        super.setWsdlURL("http://127.0.0.1:8080/GTDMCASH/web/api/cash/get-token-key");
     }
-
-    public JSONObject getToken() throws IOException {
+    public static void main(String[] args) {
         GetToken obj = new GetToken();
         try {
             Optional<String> jsonObj = Optional.ofNullable(obj.spnedRequest(Methods.GET.getMethod(), Heads.JSON.getMethod()));
             if (jsonObj.isPresent()) {
-                return XML.toJSONObject(jsonObj.get());
+                JSONObject result =  XML.toJSONObject(jsonObj.get());
+                System.out.println(result);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
     }
 }

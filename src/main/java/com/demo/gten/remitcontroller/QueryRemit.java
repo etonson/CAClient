@@ -33,7 +33,7 @@ public class QueryRemit extends WebAPISecretary {
             if (jsonObj.isPresent()) {
                 return XML.toJSONObject(jsonObj.get());
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;

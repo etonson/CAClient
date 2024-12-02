@@ -7,10 +7,10 @@ import com.demo.commons.WebAPISecretary;
 
 import java.io.IOException;
 
-/**
- * @author : eton.lin
- * @description TODO
- * @date 2024-07-23 下午 02:55
+/*
+  @author : eton.lin
+  @description TODO
+  @date 2024-07-23 下午 02:55
  */
 public class DoImportZIPDataC  extends WebAPISecretary {
     DoImportZIPDataC() {
@@ -27,7 +27,7 @@ public class DoImportZIPDataC  extends WebAPISecretary {
             String reqXml = getXML(token,fileStr,sys,releaseDate);
             obj.setBody(reqXml);
             obj.spnedRequest(Methods.POST.getMethod(), Heads.XML.getMethod());
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

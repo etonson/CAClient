@@ -27,7 +27,7 @@ public class DoImportData extends WebAPISecretary {
             String reqXml = getXML("B1", vacharXML, signHistory, "A", "1130911194955");
             obj.setBody(reqXml);
             obj.spnedRequest(Methods.POST.getMethod(), Heads.XML.getMethod());
-        } catch (IOException e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }

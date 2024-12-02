@@ -7,10 +7,18 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.text.StringEscapeUtils;
+
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
 
 @Getter
 @Setter
@@ -18,16 +26,18 @@ public class WebAPISecretary {
     private String wsdlURL = "";
     private String body;
 
-    public String spnedRequest(String method, String head) throws IOException {
-        // 初始化位置
+    public String spnedRequest(String method, String head) throws IOException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
+        // 設置SSL環境
+        SSLContext sc = SSLContext.getInstance("TLS");
+        sc.init(null, new TrustManager[] { new CustomTrustManager(null) }, new SecureRandom());
+        HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+        HttpsURLConnection.setDefaultHostnameVerifier(new CustomHostnameVerifier());
+
+        // 初始化URL
         URL url = new URL(wsdlURL);
-        // 建立連線
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        // 設置參數
-        connection.setRequestMethod(method);
-        // 設置開頭檔
-        connection.setRequestProperty("content-type", head);
-        // 設定權限
+        connection.setRequestMethod("POST");
+        connection.setRequestProperty("content-type", "text/xml;charset=utf-8");
         connection.setDoInput(true);
         connection.setDoOutput(true);
 

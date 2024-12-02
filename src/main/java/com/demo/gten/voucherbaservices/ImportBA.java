@@ -21,7 +21,7 @@ public class ImportBA extends WebAPISecretary {
 			obj.setBody(getXML("30ccf1f39b9c468089c6e74a723e3bdc",
 					getFileByte("D:\\工作\\GTEN\\TP-112-10010000-43-00-002001-B2-00157.zip")));
 			obj.spnedRequest(Methods.POST.getMethod(), Heads.XML.getMethod());
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
