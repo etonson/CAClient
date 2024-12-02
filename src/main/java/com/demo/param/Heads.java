@@ -12,11 +12,11 @@ public enum Heads {
     XML(0, "text/xml;charset=utf-8"),
     JSON(1, "application/json;charset=utf-8");
 
-    private final int NO;
-    private final String METHOD;
+    private final int no;
+    private final String method;
 
     Heads(int no, String method) {
-        this.NO = no;
-        this.METHOD = method;
+        this.no = no;
+        this.method = method;
     }
 }
