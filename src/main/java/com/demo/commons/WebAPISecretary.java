@@ -36,8 +36,8 @@ public class WebAPISecretary {
         // 初始化URL
         URL url = new URL(wsdlURL);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("POST");
-        connection.setRequestProperty("content-type", "text/xml;charset=utf-8");
+        connection.setRequestMethod(method);
+        connection.setRequestProperty("content-type", head);
         connection.setDoInput(true);
         connection.setDoOutput(true);
 
