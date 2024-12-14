@@ -1,6 +1,8 @@
 package com.demo.gten.remitcontroller;
 
+import com.demo.commons.AESUtil;
 import org.json.JSONObject;
+
 /*
     @author : Eton.lin
     @description TODO
@@ -9,29 +11,29 @@ import org.json.JSONObject;
 public class PostRequestExample {
     public static void main(String[] args) {
         try {
-            GetToken tokenObj = new GetToken();
-            JSONObject tokenJSON = tokenObj.getToken();
-            JSONObject tokenContent = tokenJSON.getJSONObject("JSONObject");
-            int status = 99;
-            if (tokenJSON.has("JSONObject")) {
-                status = tokenContent.getInt("status");
-            }
             int num = 0;
-            if (status == 0) {
-                for (String dept_code : deptCodes) {
+            for (String dept_code : deptCodes) {
+                GetToken tokenObj = new GetToken();
+                JSONObject tokenJSON = tokenObj.getToken();
+                JSONObject tokenContent = tokenJSON.getJSONObject("JSONObject");
+                int status = 99;
+                if (tokenJSON.has("JSONObject")) {
+                    status = tokenContent.getInt("status");
+                }
+                if (status == 0) {
                     for (String date_kind : new String[]{"1"}) {
                         int page = (num++);
                         if (page >= 0 && page < 30) {
                             QueryRemit queryRemit = new QueryRemit();
                             TranserJSONObj transerJSONObj = new TranserJSONObj(
-                                    "C",
-                                    "67000000",
+                                    "P",
+                                    "68000000",
                                     dept_code,
-                                    "7+1=89Bb@123456",
+                                    AESUtil.encrypt("A@t123456", tokenContent.getString("token")),
                                     tokenContent.getString("token"),
                                     date_kind,
-                                    "1131001",
-                                    "1131010");
+                                    "1131209",
+                                    "1131209");
                             queryRemit.setPostParam(transerJSONObj.createRemitString());
                             System.out.println("start");
                             System.out.println("第" + page + "筆資料");
@@ -49,6 +51,7 @@ public class PostRequestExample {
     }
 
     static String[] deptCodes = {
+            "0000000000000",
             "2192000000000",
             "0303000000000",
             "0200200000000",
