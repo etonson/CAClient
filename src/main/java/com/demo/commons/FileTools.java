@@ -1,12 +1,9 @@
 package com.demo.commons;
 
-
-
-
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
+import java.util.Base64;
 
 /*
   @author : eton.lin
@@ -14,21 +11,26 @@ import java.nio.file.Files;
   @date 2024-07-23 下午 03:14
 */
 public class FileTools {
-    public static String getFileByte(String filePath) throws IOException {
+
+
+    public static String getFileAsBase64(String filePath) throws IOException {
         File file = new File(filePath);
-        InputStream fin = Files.newInputStream(file.toPath());
-        long length = file.length();
-        byte[] bytes = new byte[(int) length];
-        int offset = 0;
-        int numRead = 0;
-        while (offset<bytes.length &&(numRead=fin.read(bytes,offset,bytes.length-offset))>=0){
-            offset+=numRead;
+        return getFileAsBase64(file);
+    }
+
+    public static String getFileAsBase64(File file) throws IOException {
+        if (file == null || !file.exists() || !file.isFile()) {
+            throw new IllegalArgumentException("Invalid file provided.");
         }
-        fin.close();
-        if(offset < bytes.length){
-            throw new IOException("不能完全讀取文件："+ file.getName());
+
+        try (FileInputStream fileInputStream = new FileInputStream(file)) {
+            byte[] fileBytes = new byte[(int) file.length()];
+            int bytesRead = fileInputStream.read(fileBytes);
+            if (bytesRead != fileBytes.length) {
+                throw new IOException("Failed to read the entire file.");
+            }
+            // Convert binary data to Base64
+            return Base64.getEncoder().encodeToString(fileBytes);
         }
-        return new String(bytes);
-//        return Base64.encode(bytes);
     }
 }

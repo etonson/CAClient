@@ -53,7 +53,7 @@ public class WebAPISecretary {
         // 取得回傳資訊stream
         StringBuilder sb;
         String result = null;
-        if (200 == responseCode) {
+        if (responseCode>0) {
             InputStream is = connection.getInputStream();
             InputStreamReader isr = new InputStreamReader(is);
             BufferedReader br = new BufferedReader(isr);

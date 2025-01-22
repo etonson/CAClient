@@ -5,8 +5,6 @@ import com.demo.param.Methods;
 import com.demo.commons.WebAPISecretary;
 import org.json.JSONObject;
 import org.json.XML;
-
-import java.io.IOException;
 import java.util.Optional;
 
 /*
@@ -20,7 +18,7 @@ public class GetToken extends WebAPISecretary {
         super.setWsdlURL("http://127.0.0.1:8080/GTEN/web/remit/queryToken");
     }
 
-    public JSONObject getToken() throws IOException {
+    public JSONObject getToken() {
         GetToken obj = new GetToken();
         try {
             Optional<String> jsonObj = Optional.ofNullable(obj.spnedRequest(Methods.GET.getMethod(), Heads.JSON.getMethod()));
@@ -28,7 +26,7 @@ public class GetToken extends WebAPISecretary {
                 return XML.toJSONObject(jsonObj.get());
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return null;
     }

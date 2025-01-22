@@ -46,7 +46,7 @@ public class PostRequestExample {
                 System.out.println("查詢結束!!");
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 

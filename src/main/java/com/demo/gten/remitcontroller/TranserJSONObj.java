@@ -30,10 +30,6 @@ public class TranserJSONObj {
         this.date_end = date_end;
     }
 
-    public TranserJSONObj() {
-
-    }
-
     public JSONObject createRemitObject() {
         JSONObject obj = new JSONObject();
         obj.put("sys_id", sys_id);

@@ -18,7 +18,7 @@ public class Common {
             List<String> result = new ArrayList<>();
             String line;
             while ((line = reader.readLine()) != null) {
-                String item[] = line.split(",");
+                String[] item = line.split(",");
                 result.add(item[0].trim());
             }
             return result;
@@ -38,8 +38,7 @@ public class Common {
             }
             bw.close();
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

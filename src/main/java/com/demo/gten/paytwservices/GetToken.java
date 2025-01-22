@@ -4,8 +4,6 @@ import com.demo.param.Heads;
 import com.demo.param.Methods;
 import com.demo.commons.WebAPISecretary;
 
-import java.io.IOException;
-
 /*
  * @author : eton.lin
  * @description TODO
@@ -24,11 +22,11 @@ public class GetToken extends WebAPISecretary {
         try {
             obj.spnedRequest(Methods.POST.getMethod(), Heads.XML.getMethod());
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
     public static String getXML(String YYY,String deptCode,String importKind,String city){
-        String soapXML = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:web=\"http://Webservice.mali.com.tw\">\n" +
+        return "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:web=\"http://Webservice.mali.com.tw\">\n" +
                 "   <soapenv:Header/>\n" +
                 "   <soapenv:Body>\n" +
                 "      <web:getTokenKey>\n" +
@@ -39,6 +37,5 @@ public class GetToken extends WebAPISecretary {
                 "      </web:getTokenKey>\n" +
                 "   </soapenv:Body>\n" +
                 "</soapenv:Envelope>";
-        return soapXML;
     }
 }

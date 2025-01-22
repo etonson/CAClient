@@ -8,7 +8,6 @@ import lombok.Setter;
 import org.json.JSONObject;
 import org.json.XML;
 
-import java.io.IOException;
 import java.util.Optional;
 
 /*
@@ -25,7 +24,7 @@ public class QueryRemit extends WebAPISecretary {
         super.setWsdlURL("http://127.0.0.1:8080/GTEN/web/remit/queryRemit");
     }
 
-    public JSONObject postQueryRemit() throws IOException {
+    public JSONObject postQueryRemit(){
         QueryRemit obj = new QueryRemit();
         obj.setBody(postParam);
         try {
@@ -34,7 +33,7 @@ public class QueryRemit extends WebAPISecretary {
                 return XML.toJSONObject(jsonObj.get());
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return null;
     }
